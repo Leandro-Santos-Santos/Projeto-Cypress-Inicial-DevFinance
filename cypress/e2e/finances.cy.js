@@ -6,6 +6,13 @@ describe('Transações', ()=> {
         criarTransacao("Pintura",900)
         
     }); 
+
+    it('Cadastrar uma saída', () => {
+        cy.visit("https://dev-finance.netlify.app/")
+
+        criarTransacao("Combustivel", -200)
+    })
+
 });
 
 function criarTransacao(descricao, valor){
