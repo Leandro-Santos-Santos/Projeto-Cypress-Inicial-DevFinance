@@ -1,18 +1,26 @@
-describe('Transações', ()=> {
-    it('Cadastrar uma entrada', () => {
-        cy.visit("https://dev-finance.netlify.app/")
+describe('Transações', () => {
 
-        criarTransacao("Serviços Gerais",100)
+    beforeEach(() => {
+        cy.visit("https://dev-finance.netlify.app/")
+    });
+
+    it('Cadastrar uma entrada', () => {
         criarTransacao("Pintura",900)
-        
+        cy.get("tbody tr td.description").should("have.text", "Pintura")
     }); 
 
     it('Cadastrar uma saída', () => {
-        cy.visit("https://dev-finance.netlify.app/")
-
         criarTransacao("Combustivel", -200)
-    })
+        cy.get("tbody tr td.description").should("have.text", "Combustivel")
+    });
 
+    it('Excluir transação', () => {
+        criarTransacao("Pintura",100)
+        cy.contains(".description","Pintura")
+            .parent()
+            .find('img')
+            .click()
+    });
 });
 
 function criarTransacao(descricao, valor){
